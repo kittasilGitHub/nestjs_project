@@ -7,6 +7,6 @@ export class AppService {
   }
 
   getName(): string {
-    return 'Hello Kittasil Silanon';
+    return 'Hello MR. Kittasil Silanon';
   }
 }
