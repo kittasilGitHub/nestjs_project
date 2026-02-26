@@ -9,4 +9,15 @@ export class AppService {
   getName(): string {
     return 'Hello MR. Kittasil Silanon!!!';
   }
+
+  getJson(){
+    return {
+      name: "kittasil",
+      lastname: "silanon",
+      version: process.env.API_VERSION,
+      password: process.env.PASSWORD,
+    }
+  }
+
+
 }

@@ -14,4 +14,9 @@ export class AppController {
   getName(): string {
     return this.appService.getName();
   }
+
+  @Get('/getjson')
+  getJson() {
+    return this.appService.getJson();
+  }
 }
