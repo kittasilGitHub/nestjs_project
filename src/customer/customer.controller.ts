@@ -7,9 +7,17 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
-  @Post()
-  create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customerService.create(createCustomerDto);
+  @Post('/create')
+  async create(@Body() createCustomerDto: CreateCustomerDto) {
+    const createcustomer = await this.customerService.create(createCustomerDto);
+    if(createcustomer == null)
+    {
+      throw new Error("Can not create data!!!")
+    }
+    return {
+      message: "Create data complete",
+      data : createcustomer,
+    };
   }
 
   @Get()
@@ -26,6 +34,18 @@ export class CustomerController {
     }
     return findcustomer;
   }
+
+  @Get('/findfullname/:fullname')
+  async findFullname(@Param('fullname') fullname: string){
+    const findfullname = await this.customerService.findFullname(fullname);
+    if(findfullname == null){
+      throw new NotFoundException("Not Found Data!!!");
+    }
+    return findfullname;
+  }
+
+
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {

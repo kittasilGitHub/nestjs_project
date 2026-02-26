@@ -12,8 +12,10 @@ export class CustomerService {
     private customerModel: typeof Customer,
   ){}
 
-  create(createCustomerDto: CreateCustomerDto) {
-    return 'This action adds a new customer';
+  async create(createCustomerDto: CreateCustomerDto) {
+    return await this.customerModel.create(
+      createCustomerDto as Partial<Customer>,
+    );
   }
 
  async findAll() {
@@ -24,6 +26,15 @@ export class CustomerService {
 
   async findOne(id: number) {
     return await this.customerModel.findByPk(id);
+  }
+
+  async findFullname(fullname: string){
+    return await this.customerModel.findOne({
+        where:{
+          fullname: fullname,
+        },
+      }
+    );
   }
 
   update(id: number, updateCustomerDto: UpdateCustomerDto) {
