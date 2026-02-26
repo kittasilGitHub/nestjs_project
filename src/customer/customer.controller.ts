@@ -47,13 +47,26 @@ export class CustomerController {
 
 
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-    return this.customerService.update(+id, updateCustomerDto);
+  @Patch('/update/:id') // can use method "PUT" or "PATCH"
+  async update(@Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
+    const [updatecustomer] = await this.customerService.update(
+      +id,
+      updateCustomerDto,
+    );
+
+    if (updatecustomer == 0){
+      throw new NotFoundException('Not Found data to update!!!');
+    }
+
+    return { message: 'Update data complete!!!'}
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customerService.remove(+id);
+  @Delete('/delete/:id')
+  async remove(@Param('id') id: string) {
+    const removecustomer = await this.customerService.remove(+id);
+    if (removecustomer == 0){
+      throw new NotFoundException('Not Found data to remove!!!');
+    }
+    return { message: 'Remove complete!!!'}
   }
 }
